@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:14.5
+    restart: always
+    env_file:
+      - ./env/postgres.env
+    volumes:
+      - tellendata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    container_name: tellendb
+    
+
+volumes:
+  tellendata:
