@@ -90,14 +90,18 @@ for path in paths:
             page_nums.append(int(match.group(1)))
 
     # skip to relevant section to save compute
-    text = f"{company} - {date}\n"
+    text = f"{company} - {date}\n\n"
+    if (page_nums[0] == page_nums[1]):
+        page_nums[1] += 1
     for i in range(page_nums[0], page_nums[1]):
+        # Note this doesn't ignore page numbers/headers/footers
         page = reader.pages[i]
-        text += page.extract_text() + "\n"
+        text += page.extract_text() + "\n\n"
 
         # below outputs the results of the first pdf to a text file just as an example of the text we're extracting
         Path('out.txt').write_text(text, encoding='utf-8')
     break
+
 
     # Feed to OpenAI for Text Extraction of the issues
 
