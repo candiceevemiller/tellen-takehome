@@ -21,7 +21,7 @@ try:
     engine = create_engine(f"postgresql://{DB_USER}:{DB_PASS}@0.0.0.0:5432/{DB_NAME}", echo=True)
 except Exception as e:
     # Exit on fail
-    print("Error connecting to the database")
+    print(f"Error connecting to the database: {e}")
     exit(1)
 
 # Create db schema if not existing
@@ -90,10 +90,10 @@ for path in paths:
             page_nums.append(int(match.group(1)))
 
     # skip to relevant section to save compute
-    text = ""
+    text = f"{company} - {date}\n"
     for i in range(page_nums[0], page_nums[1]):
         page = reader.pages[i]
-        text += page.extract_text()
+        text += page.extract_text() + "\n"
 
         # below outputs the results of the first pdf to a text file just as an example of the text we're extracting
         Path('out.txt').write_text(text, encoding='utf-8')
